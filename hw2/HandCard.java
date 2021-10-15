@@ -129,10 +129,11 @@ public class HandCard {
         return handCards.get(i);
     }
     public Integer getFirstIndex(Integer num){
-        for(int i = 0 ; i < handCards.size(); i ++){
+        for(Integer i = 0 ; i < handCards.size(); i ++){
             if(handCards.get(i).getNumber()==num){
                 return i;
             }
         }
+        return -1;
     }
 }
