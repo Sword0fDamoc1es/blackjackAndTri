@@ -32,7 +32,7 @@ public class BJDealer {
         return message;
     }
     public int getScore(){ 
-        return handcards.refresh_score();
+        return handcards.getDefaultScore();
     }
     public int getState(){
         return state;

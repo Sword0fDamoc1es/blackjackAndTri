@@ -72,18 +72,18 @@ public class BJGame {
         for(BJPlayer p : player_list){
             Card c = cards.cardGenerate();
             p.receiveCard(c,0);
-            System.out.println(p.getName()+" reveive card "+c);
+            System.out.println("Player "+p.getName()+" reveive card "+c);
             c = cards.cardGenerate();
             p.receiveCard(c,0);
-            System.out.println(p.getName()+" reveive card "+c);
+            System.out.println("Player "+p.getName()+" reveive card "+c);
         }
         Card c = cards.cardGenerate();
-        c.flipCard();
         dealer.receiveCard(c);
-        System.out.println("dealer reveive card "+c);
+        System.out.println("Dealer reveive card "+c);
+        c.flipCard();
         c = cards.cardGenerate();
         dealer.receiveCard(c); 
-        System.out.println("dealer reveive card "+c);
+        System.out.println("Dealer reveive card "+c);
         // display all.
         displaydesk();
 
@@ -93,7 +93,9 @@ public class BJGame {
         for (BJPlayer p: player_list){ 
             if(p.getIsOut()==0){
                 Integer num_not_bust = 0; // check if player has un_bust handcard
+                int count = 0;
                 for(HandCard hc: p.getHandCardList()){
+                    System.out.println("Now it's turn for Player "+p.getName()+" on handcard "+count);
                     //select operation for card set hc
                     boolean stand = false;
                     while(!stand){
@@ -103,19 +105,17 @@ public class BJGame {
                             // hit
                             c = cards.cardGenerate();
                             hc.addCard(c);
-                            hc.refresh_score();
                             System.out.println(p.getName()+" reveive card "+c);
-                            if(hc.bust()){
+                            if(hc.checkBust()){
                                 stand = true;
+                                System.out.println("Oops! Bust!");
                                 // I/O: this handcard is bust, you lost bet on this handcard
-                                continue;
                             }
                         }
                         if(op == 2){
                             //stand
                             num_not_bust+=1;
                             stand = true;
-                            continue;
                         }
                         if(op == 3){
                             // double_up
@@ -126,8 +126,7 @@ public class BJGame {
                             c = cards.cardGenerate();
                             hc.addCard(c);
                             System.out.println(p.getName()+" reveive card "+c);
-                            int s = hc.refresh_score();
-                            if (!hc.bust()){num_not_bust+=1;}
+                            if (!hc.checkBust()){num_not_bust+=1;}
                             stand = true;
                         }
                         if(op == 4){
@@ -139,6 +138,7 @@ public class BJGame {
                         }
                         displaydesk();
                     }
+                    count += 1;
                 }
                 if (num_not_bust!=0){numberOfLeft+=1;}
             }
@@ -150,11 +150,15 @@ public class BJGame {
             // show dealer card
             dealer.getHandCards().getHandCard(0).openCard();
             Integer dealer_score = dealer.getScore();
+            System.out.println("Now the dealer open the flipped card.");
+            displaydesk();
             
             while (dealer_score<=16){
                 c = cards.cardGenerate();
                 dealer.receiveCard(c);
+                System.out.println("Dealer"+" reveive card "+c);
                 dealer_score = dealer.getScore();
+                displaydesk();
             }
             if (dealer_score>21){round_cal(1);} // dealer bust
             else{round_cal(2);}
@@ -170,8 +174,8 @@ public class BJGame {
         }
     }
     public void round_cal(Integer game_state){
-        if (game_state == 0){
-            // dealer win
+        System.out.println("Now this round ended, starts scores calculation.");
+        if (game_state == 0){ // dealer win
             for (BJPlayer p: player_list){ 
                 if(p.getIsOut()==0){
                     for(HandCard hc: p.getHandCardList()){
@@ -183,8 +187,14 @@ public class BJGame {
             for (BJPlayer p: player_list){ 
                 if(p.getIsOut()==0){
                     for(HandCard hc: p.getHandCardList()){
-                        if (hc.isBust==1){dealer.reward(hc.getBet());}
-                        else{p.reward(hc.getBet()*2);}
+                        if (hc.checkBust()){
+                            System.out.println("Player "+p.getName()+" bust and lose all bet on handcard "+ hc);//
+                            dealer.reward(hc.getBet());
+                            System.out.println("-> Dealer receive "+hc.getBet()+ " money.");
+                        }
+                        else{
+                            System.out.println("Dealer bust, player " + p.getName() + " get twice of bet back on handcard "+hc);
+                            p.reward(hc.getBet()*2);}
                     }
                 }
             }
@@ -192,9 +202,27 @@ public class BJGame {
             for (BJPlayer p: player_list){ 
                 if(p.getIsOut()==0){
                     for(HandCard hc: p.getHandCardList()){
-                        if (hc.getScore()<dealer.getScore()){dealer.reward(hc.getBet());}
-                        else if(hc.getScore()==dealer.getScore()){p.reward(hc.getBet());}
-                        else{p.reward(hc.getBet()*2);}
+                        if (hc.refresh_score()>21){
+                            System.out.println("Player "+p.getName()+" is smaller and lose all bet on handcard "+ hc);//
+                            dealer.reward(hc.getBet());
+                            System.out.println("-> Dealer receive "+hc.getBet()+ " money.");
+
+                        }
+                        else if (hc.getScore()<dealer.getScore()){
+                            System.out.println("Player "+p.getName()+" is smaller and lose all bet on handcard "+ hc);//
+                            dealer.reward(hc.getBet());
+                            System.out.println("-> Dealer receive "+hc.getBet()+ " money.");
+
+                        }
+                        else if(hc.getScore()==dealer.getScore()){
+                            System.out.println("Player "+p.getName()+" not win/lose on handcard "+ hc);//
+                            p.reward(hc.getBet());
+                            System.out.println("-> Player "+p.getName()+" receive all bet back");//
+                        }
+                        else{
+                            System.out.println("Player "+p.getName()+" is larger and win twice of bet on handcard "+ hc);//
+                            p.reward(hc.getBet()*2);
+                        }
                     }
                 }
             }
