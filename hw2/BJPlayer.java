@@ -19,7 +19,6 @@ public class BJPlayer {
     }
     public ArrayList<HandCard> getHandCardList(){return handcard_list;}
     public void clearState(){
-        clearIsOut();
         handcard_list =  new ArrayList<HandCard>();
         handcard_list.add(new HandCard());
     }

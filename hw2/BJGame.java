@@ -8,53 +8,35 @@ public class BJGame {
 
     // constructor
     BJGame(){
-        set_players();
-        // cards? cardSet? allcard? card? U decide.
         cards = new AllCard();
-        //
+        set_players();
     }
     public void set_players(){
         player_list = new ArrayList<BJPlayer>();
-        // I/O needed : type input numbers 
-        int n = 10;
-        //
-
-        for(int i=0 ; i < n; i++){
-            // I/O is needed. : type String.
-            // I/O is needed : type int.
+        // I/O : how many players
+        int num_of_players = 10;
+        for(int i=0 ; i < num_of_players; i++){
+            // I/O : Name for player i
+            // I/O : Total Money for player i
             String name = "";
             int money = 0;
-            //
-
-            player_list.set(i,new BJPlayer(name,money));
-
+            player_list.add(new BJPlayer(name,money));
         }
-        //I/O is needed : type String.
-        // I/O is needed : type int.
-        
-        String name = "";
-        int bet = 0;
-        // 
-        
-        dealer = new BJDealer(name,bet);
-
+        // I/O : Total Money for dealer
+        int money = 0;
+        dealer = new BJDealer("Dealer",money);
     }
     public void run(){
-        while(checkWin()){
+        while(checkGameWin()){
             new_round();
-
         }
         ending();
     }
 
-    public Boolean checkWin(){
+    public Boolean checkGameWin(){
         int count = player_list.size();
-        for (int i = 0 ; i < player_list.size(); i ++){
-            // BJPlayer needs to add bet to remove following bug.
-            if(player_list.get(i).getMoney()<=0) {
-                count --;
-                richPlayer.set(i,false);
-            }
+        for (BJPlayer p: player_list){
+            if (p.getIsOut()==0){count-=1;}
         }
         return count != 0;
         
@@ -67,17 +49,17 @@ public class BJGame {
         }
         System.out.println(dealer);
     }
+
     public void new_round(){
-        clearAllIsOutState(); // only clear state for money>0
         cards.reset();
 
         // make bet for all not out
-        for(int i = 0 ; i  <player_list.size();i++){
-            if(player_list.get(i).getMoney()>0){
-                // I/O needed.
+        for(BJPlayer p: player_list){
+            if(p.getIsOut()==0){
+                // I/O : get new bet on this round for player name
                 int mon = scan.nextInt();
-                player_list.get(i).makeBet(mon);
-                player_list.get(i).getHandCardList().get(0).makeBet(mon);
+                p.makeBet(mon);
+                p.getHandCardList().get(0).makeBet(mon);
             }
         }
 
@@ -98,155 +80,115 @@ public class BJGame {
 
 
         // check player left.
-        int numberOfLeft = checkPlayerLeft();
-
-        for (int i = 0; i < player_list.size(); i ++){
-            // get boolean/
-            
-            // get is_state.
-            display dtool = new display();
-            
-            if(player_list.get(i).getMoney()>=0 && player_list.get(i).getIsOut()==0){
-                //select operation.
-                for(HandCard hc: player_list.get(i).getHandCardList()){
-                    dtool.operationPlayer();
-
+        Integer numberOfLeft = 0; // check if still any player on desk
+        for (BJPlayer p: player_list){ 
+            if(p.getIsOut()==0){
+                Integer num_not_bust = 0; // check if player has un_bust handcard
+                for(HandCard hc: p.getHandCardList()){
+                    //select operation for card set hc
                     boolean stand = false;
                     while(!stand){
-                            // operate
+                        // I/O -> what option you need to do for this handset
                         int op = scan.nextInt();
                         if(op == 1){
                             // hit
                             c = cards.cardGenerate();
                             hc.addCard(c);
-                            int s = hc.refresh_score();
+                            hc.refresh_score();
                             if(hc.bust()){
                                 stand = true;
+                                // I/O: this handcard is bust, you lost bet on this handcard
                                 continue;
                             }
                         }
                         if(op == 2){
                             //stand
+                            num_not_bust+=1;
                             stand = true;
                             continue;
                         }
                         if(op == 3){
-                            //double
-                            Integer b = hc.getBet();
+                            // double_up
+                            Integer bet = hc.getBet();
                             // player -;
-                            player_list.get(i).makeBet(b);
-                            hc.makeBet(2*b);
+                            p.makeBet(bet);
+                            hc.makeBet(2*bet);
                             c = cards.cardGenerate();
                             hc.addCard(c);
                             int s = hc.refresh_score();
-                            if(hc.bust()){
-                                stand = true;
-                                continue;
-                            } 
+                            if (!hc.bust()){num_not_bust+=1;}
+                            stand = true;
                         }
                         if(op == 4){
-                            //split
-                            // i/o
-                            ArrayList<Integer> a = hc.splitable();
-                            System.out.println(a.toString());
-                            // io.
-                            int n = scan.nextInt();
-                            Integer z = hc.getFirstIndex(n);
-                            player_list.get(z);
-
+                            // split
+                            // I/O : which number do you split
+                            int num = scan.nextInt();
+                            Integer index = p.getHandCardList().indexOf(hc);
+                            p.splitCard(index, num);
                         }
                     }
                 }
-                
-                // check player.
-                int nnn =player_list.get(i).getHandCardList().size();
-                for(HandCard hc : player_list.get(i).getHandCardList()){
-                    if(hc.bust()){
-                        nnn--;
-                    }
-                }
-                if(nnn==0){
-                    player_list.get(i).out();
-                    numberOfLeft --;
-                }
-                // change is out?
-                // numberOfLeft -- ?
+                if (num_not_bust!=0){numberOfLeft+=1;}
             }
-
         }
-
-
-
-        if(numberOfLeft==0){
-            System.out.println("Players all busted. Dealer wins.");
-            //
-            //
-            Integer sss = 0;
-            for(BJPlayer p : player_list){
-
+        // user all bust
+        if (numberOfLeft==0){
+            round_cal(0); // dealer win
+        }else{
+            // show dealer card
+            dealer.getHandCard().getHandCard(0).openCard();
+            Integer dealer_score = dealer.getScore();
+            while (dealer_score<=16){
+                c = cards.cardGenerate();
+                dealer.receiveCard(c);
             }
-
-
+            if (dealer_score>21){round_cal(1);} // dealer bust
+            else{round_cal(2);}
         }
-
-
-
-
-
-
-
-        
-        while(dealer.getState() !=0){
-            
-        }
-
-        // if dealer bust:
-        if (dealer.getScore() > 21){
-            for(int i = 0 ; i < player_list.size(); i++){
-                if(richPlayer.get(i) && player_list.get(i).getIsOut() == 0){
-                    // player_list.get(i).recievebet
-                }
-            }
-
-        }
-        else{
-            for(int i = 0 ; i < player_list.size(); i++){
-                if(richPlayer.get(i) && player_list.get(i).getIsOut() == 0){
-                    for(HandCard h : player_list.get(i).getHandCardList()){
-                        if (h.getScore() > dealer.getScore()){
-                            player_list.get(i).reward(h.getBet()*2);
-                            // dealer make bet
-                        }
-                    }
-                }
-            }
-
-        }
-
-
+        // update user_state -> all user withou money left is out
+        out_players();
     }
+
+    public void out_players(){
+        for (BJPlayer p: player_list){ 
+            if (p.getMoney()==0){p.out();}
+            else {p.clearState();}
+        }
+    }
+    public void round_cal(Integer game_state){
+        if (game_state == 0){
+            // dealer win
+            for (BJPlayer p: player_list){ 
+                if(p.getIsOut()==0){
+                    for(HandCard hc: p.getHandCardList()){
+                        dealer.reward(hc.bet);
+                    }
+                }
+            }
+        }else if(game_state == 1){ // dealer bust
+            for (BJPlayer p: player_list){ 
+                if(p.getIsOut()==0){
+                    for(HandCard hc: p.getHandCardList()){
+                        if (hc.isBust==1){dealer.reward(hc.getBet());}
+                        else{p.reward(hc.getBet()*2);}
+                    }
+                }
+            }
+        }else{
+            for (BJPlayer p: player_list){ 
+                if(p.getIsOut()==0){
+                    for(HandCard hc: p.getHandCardList()){
+                        if (hc.getScore()<dealer.getScore()){dealer.reward(hc.getBet());}
+                        else if(hc.getScore()==dealer.getScore()){p.reward(hc.getBet());}
+                        else{p.reward(hc.getBet()*2);}
+                    }
+                }
+            }
+        }
+    }
+
     public void ending(){
-
+        System.out.println("game_over");
     }
 
-
-    
-
-    public void clearAllIsOutState(){
-        // clear state only for rich player.
-        int count = 0;
-        for(Boolean b : richPlayer){
-            if(b){
-                player_list.get(count).clearIsOut();
-            }
-            count++;
-        }
-    }
-    public int checkPlayerLeft(){
-        int n = 0;
-        for(BJPlayer b : player_list){
-            n += (b.getIsOut()==0)? 1: 0;
-        }
-        return n;
-    }
 }
