@@ -65,15 +65,15 @@ public class HandCard {
     // no further change of score until next turn.
     // thus we need a refresh score to ask for refresh.
     public int refresh_score(){
-        System.out.println("Your current score is :");
-        System.out.println(score);
-        System.out.println("Do you want to change?");
+        // System.out.println("Your current score is :");
+        // System.out.println(score);
+        // System.out.println("Recheck your score: ");
         // **??** I/O is needed here!
         score = 0;
         for(Card c : handCards){
             score += c.selectVal();
         }
-
+        // System.out.println(score);
         return score;
     }
 
@@ -100,14 +100,7 @@ public class HandCard {
         }
     }
 
-    public String toString(){
-        String message = "{";
-        for (Card d: handCards){
-            message += " " + d.getNumber();
-        }
-        message += "}";
-        return message;
-    }
+
     // below will show functions from interface.
     public boolean bust(){
         return score>21;
@@ -135,5 +128,17 @@ public class HandCard {
             }
         }
         return -1;
+    }
+    // public boolean isAce(){
+
+    // }
+    public String toString(){
+        String message = "{";
+        for (Card d: handCards){
+            message += " " + d;
+        }
+        message += "}"; 
+        message += "[Score: "+score+"]";
+        return message;
     }
 }

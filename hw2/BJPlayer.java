@@ -17,9 +17,10 @@ public class BJPlayer {
         isOut = 0;
         handcard_list.add(new HandCard());
     }
-
-    public ArrayList<HandCard> getHandCardList(){
-        return handcard_list;
+    public ArrayList<HandCard> getHandCardList(){return handcard_list;}
+    public void clearState(){
+        handcard_list =  new ArrayList<HandCard>();
+        handcard_list.add(new HandCard());
     }
     public Boolean isSplitable(Integer index){
         Integer bed_on = handcard_list.get(index).getBet();
@@ -45,10 +46,10 @@ public class BJPlayer {
     public void out(){isOut = 1;}
     public String toString(){
         // return all handcards
-        String message = name + ": ";
+        String message = "Player "+ name + " has the following cards: ";
         int count = 0;
         for (HandCard handcard: handcard_list){
-            message += "\n"+"Handcards "+ count + ":" + handcard.toString(); 
+            if (!handcard.bust()){message += "\n"+"Handcards "+ count + ":" + handcard.toString();}
         }
         return message;
     }

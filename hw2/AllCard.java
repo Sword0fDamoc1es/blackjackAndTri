@@ -16,7 +16,7 @@ public class AllCard {
     public Card cardGenerate(){
         Random rand = new Random();
 // **??** rewrite the following to be rebust.
-        int num = rand.nextInt(53);
+        int num = rand.nextInt(52);
         while (set.contains(num)){ num = rand.nextInt(52);}
         set.add(num);
         return cards.get(num);

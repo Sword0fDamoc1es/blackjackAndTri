@@ -39,22 +39,27 @@ public class Card {
     // ! Else, directly return the value. Addtion on HandCard Class would be done later.
 
     public int selectVal(){
+
         int value;
+        // System.out.println("You get card: " + number);
+        // System.out.println("selectVal() called");
+        if(flipped==1){
+            return 0;
+        }
         if(number == 1){
             // **??** I/O is needed here!.
+            System.out.println("you need to choose the score for Ace:");
             Scanner scan = new Scanner(System.in);
             String request = scan.nextLine();
             // the above needs rewrite.
-            value = (request=="11")?11:1;
-            scan.close();
+            value = (request.equals("11"))?11:1;
+
         }
         if(number>=10){
             value = 10;
         }
         value = number;
-        System.out.println(value+" is the score of this card.");
-
-        System.out.println();
+        // System.out.println(value+" is the score of this card.");
         return value;
     }
 
