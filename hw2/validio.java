@@ -132,5 +132,24 @@ public class validio {
         scan.close();
         return a;
     }
+    public String validyn(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("please choose yes 'y'  or no  'n'. ");
+        String a;
+        while(true){
+            try{
+                a = scan.nextLine();
+                if(a.equals("n") || a.equals("y")){
+                    System.out.println("invalid input!");
+                }else{
+                    break;
+                }
+            }catch(Exception e){
+                System.out.println("please input valid number.");
+            }
+        }
+        scan.close();
+        return a;
+    }
 
 }
