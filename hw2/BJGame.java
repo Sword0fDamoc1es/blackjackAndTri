@@ -151,8 +151,8 @@ public class BJGame {
                             System.out.println(a.toString());
                             // io.
                             int n = scan.nextInt();
-                            Integer i = hc.getFirstIndex(n);
-                            player_list.get(i);
+                            Integer z = hc.getFirstIndex(n);
+                            player_list.get(z);
 
                         }
                     }
