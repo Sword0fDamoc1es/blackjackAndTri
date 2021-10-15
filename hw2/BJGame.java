@@ -5,6 +5,7 @@ public class BJGame {
     public AllCard cards = new AllCard();
     public ArrayList<Boolean> richPlayer = new ArrayList<>();
     Scanner scan = new Scanner(System.in);
+    validio io = new validio();
 
     // constructor
     BJGame(){
@@ -14,6 +15,7 @@ public class BJGame {
     public void set_players(){
         player_list = new ArrayList<BJPlayer>();
         // I/O : how many players
+
         int num_of_players = 10;
         for(int i=0 ; i < num_of_players; i++){
             // I/O : Name for player i
