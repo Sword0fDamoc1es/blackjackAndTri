@@ -2,14 +2,14 @@ import java.util.*;
 public class BJGame {
     public ArrayList<BJPlayer> player_list = new ArrayList<>();
     public BJDealer dealer;
-    public CardSet cards = new CardSet();
+    public AllCard cards = new AllCard();
     public ArrayList<Boolean> richPlayer = new ArrayList<>();
 
     // constructor
     BJGame(){
         set_players();
         // cards? cardSet? allcard? card? U decide.
-        cards = new Card52();
+        cards = new AllCard();
         //
     }
     public void set_players(){
@@ -50,7 +50,7 @@ public class BJGame {
         int count = player_list.size();
         for (int i = 0 ; i < player_list.size(); i ++){
             // BJPlayer needs to add bet to remove following bug.
-            if(player_list.get(i).bet.getBet()<=0) {
+            if(player_list.get(i).getMoney()<=0) {
                 count --;
                 richPlayer.set(i,false);
             }
@@ -61,7 +61,7 @@ public class BJGame {
 
     public void new_round(){
         clearAllIsOutState();
-
+        cards.reset();
         // hit.
 
         // hit for dealer/
@@ -72,7 +72,7 @@ public class BJGame {
             // get boolean/
             
             // get is_state.
-            if(richPlayer.get(i) && player_list.get(i).is_out==0){
+            if(richPlayer.get(i) && player_list.get(i).getIsOut()==0){
                 //select operation.
                 boolean stand = false;
                 while(!stand){
@@ -86,22 +86,22 @@ public class BJGame {
 
         }
         if(numberOfLeft==0){
-            System.out.println("Players all busted. Dealer wins.")
+            System.out.println("Players all busted. Dealer wins.");
             //
             // code needed here for dealer.
 
 
         }
 
-        while(dealer.state()){
+        while(dealer.getState()!=0){
             // dealer hit
             // dealer check.
         }
 
         // if dealer bust:
-        if (dealer.score > 21){
+        if (dealer.getScore() > 21){
             for(int i = 0 ; i < player_list.size(); i++){
-                if(richPlayer.get(i) && player_list.get(i).is_out == 0){
+                if(richPlayer.get(i) && player_list.get(i).getIsOut() == 0){
                     // player_list.get(i).recievebet
                 }
             }
@@ -109,10 +109,11 @@ public class BJGame {
         }
         else{
             for(int i = 0 ; i < player_list.size(); i++){
-                if(richPlayer.get(i) && player_list.get(i).is_out == 0){
-                    for(HandCard h : player_list.get(i).HandCardPool){
-                        if (h.getScore > dealer.score){
-                            player_list.get(i).add(bet);
+                if(richPlayer.get(i) && player_list.get(i).getIsOut() == 0){
+                    for(HandCard h : player_list.get(i).getHandCardList()){
+                        if (h.getScore() > dealer.getScore()){
+                            player_list.get(i).reward(h.getBet()*2);
+                            // dealer make bet
                         }
                     }
                 }
@@ -141,7 +142,7 @@ public class BJGame {
     public int checkPlayerLeft(){
         int n = 0;
         for(BJPlayer b : player_list){
-            n += (b.is_out==0)? 1: 0;
+            n += (b.getIsOut()==0)? 1: 0;
         }
         return n;
     }
