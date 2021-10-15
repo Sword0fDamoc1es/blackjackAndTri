@@ -7,6 +7,8 @@ public class BJDealer {
     private Integer money;
     private HandCard handcards =  new HandCard();
     private Integer state;
+    
+
 
 
     // constructor with parameters.
