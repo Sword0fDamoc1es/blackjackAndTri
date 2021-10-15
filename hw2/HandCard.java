@@ -105,6 +105,7 @@ public class HandCard {
         for (Card d: handCards){
             message += " " + d.getNumber();
         }
+        
         return message;
     }
     // below will show functions from interface.
