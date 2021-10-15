@@ -17,7 +17,7 @@ public class HandCard {
     public Integer score = 0;
     public Integer isBust = 0;
     public Integer isBJ = 0; 
-    public Integer bet;
+    public Integer bet = 0;
 
     //constructor1.
     HandCard(){
@@ -133,12 +133,13 @@ public class HandCard {
 
     // }
     public String toString(){
+
         String message = "{";
         for (Card d: handCards){
             message += " " + d;
         }
-        message += "}"; 
-        message += "[Score: "+score+"]";
+        message += " }"; 
+        message += "[Bet: "+bet+"]";
         return message;
     }
 }

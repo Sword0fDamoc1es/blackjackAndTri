@@ -57,6 +57,7 @@ public class Card {
         }
         if(number>=10){
             value = 10;
+            return value;
         }
         value = number;
         // System.out.println(value+" is the score of this card.");

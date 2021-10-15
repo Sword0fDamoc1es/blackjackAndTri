@@ -196,8 +196,11 @@ public class validio {
 
     public static void main(String[] args) {
         validio io = new validio();
-        int num = io.playerNumber();
-        String name = io.playername();
+        int num = io.validBet(6);
+        System.out.println(num);
+        // int num = io.playerNumber();
+        // String name = io.playername();
         // System.out.println(name);
+
     }
 }
