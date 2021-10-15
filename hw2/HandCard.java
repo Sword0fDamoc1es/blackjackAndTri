@@ -12,24 +12,29 @@ public class HandCard {
 
 
     // members & reason:
-    public ArrayList<Integer> handCardIsFlipped;
-    public ArrayList<Card> handCard;
-    public int score=0;
+    public ArrayList<Integer> handCardsIsFlipped;
+    public ArrayList<Card> handCards;
+    public Integer score = 0;
+    public Integer isBust = 0;
+    public Integer isBJ = 0; 
+    public Integer bet;
 
     //constructor1.
     HandCard(){
-        handCard = new ArrayList<Card>();
+        handCards = new ArrayList<Card>();
         score = 0; 
     }
     //constructor2.
     HandCard(Card c){
-        handCard = new ArrayList<Card>();
+        handCards = new ArrayList<Card>();
         addCard(c);
         score = c.selectVal();
-
     }
+    public Integer getBet(){return bet;}
+    public void makeBet(Integer bet_){bet = bet_;}
+    public ArrayList<Card> getAllCards(){return handCards;}
     public void addCard(Card c){
-        handCard.add(c);
+        handCards.add(c);
         score += c.selectVal();
     }
     // remove method is used in split method.
@@ -40,7 +45,7 @@ public class HandCard {
     // 
     // For this method, it get a index after comparison. index is the input.
     public void removeCard(int index){
-        handCard.remove(index);
+        handCards.remove(index);
         score = refresh_score();
     }
     
@@ -48,9 +53,7 @@ public class HandCard {
     // judge will decide whether a player is out.
     // we just need to return a score.
     // further encapsulation is needed, we just set score as public first.
-    public int getScore(){
-        return score;
-    }
+    public int getScore(){ return score;}
 
     // almost forget, for every player, once stand, he has already fix his score.
     // no further change of score until next turn.
@@ -61,7 +64,7 @@ public class HandCard {
         System.out.println("Do you want to change?");
         // **??** I/O is needed here!
         score = 0;
-        for(Card c : handCard){
+        for(Card c : handCards){
             score += c.selectVal();
         }
 
@@ -79,16 +82,24 @@ public class HandCard {
     // this function is only called right after hit, once.
     public void setFlip(int pd, int state){
         if(pd == 0){
-            handCardIsFlipped.add(1);//1 means face up.
+            handCardsIsFlipped.add(1);//1 means face up.
         }
         if(pd == 1 && state == 0){
-            handCardIsFlipped.set(0, 0);
-            handCardIsFlipped.add(1);
+            handCardsIsFlipped.set(0, 0);
+            handCardsIsFlipped.add(1);
         }
         if(pd == 1 && state == 1){
-            handCardIsFlipped.set(0,1);
-            handCardIsFlipped.add(1);
+            handCardsIsFlipped.set(0,1);
+            handCardsIsFlipped.add(1);
         }
+    }
+
+    public String toString(){
+        String message = "{";
+        for (Card d: handCards){
+            message += (" " + d.toString();
+        }
+        return message;
     }
     // below will show functions from interface.
 

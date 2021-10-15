@@ -1,7 +1,9 @@
 import java.util.*;
 public class Card {
-    public int number;
-    public String name;
+    private Integer number;
+    private String name;
+    // private Integer isFlipped = 0;
+
 
     Card(int number, String name){
         this.number = number;

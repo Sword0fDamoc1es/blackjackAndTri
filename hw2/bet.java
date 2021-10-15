@@ -18,5 +18,4 @@ public class bet {
         amount = amount - re;
     }
 
-
 }

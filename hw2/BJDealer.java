@@ -1,15 +1,22 @@
 // new created 
+import java.util.*;
 
 public class BJDealer {
     // members as follows.
     // codes need to be done.
     
-    bet bet = new bet();
+    private String name;
+    private Integer bet;
+    private Integer money;
+    private Integer isOut;
+    private ArrayList<BJCard> handcards =  new ArrayList<BJCard>();
+    private Integer isSplit;
+    
+
+
 
     // constructor with parameters.
-    BJDealer(String name, int bet){
-
-        this.bet.setBet(bet);
+    BJDealer(String name, Integer bet){
         // codes need to be done.
     }
 }
