@@ -32,6 +32,12 @@ public class HandCard {
     }
     public Integer getBet(){return bet;}
     public void makeBet(Integer bet_){bet = bet_;}
+    public void addBet(Integer num){ bet += num;}
+    public int clearBet(){
+        int b = bet;
+        makeBet(0);
+        return b;
+    }
     public ArrayList<Card> getAllCards(){return handCards;}
     public void addCard(Card c){
         handCards.add(c);
@@ -97,10 +103,35 @@ public class HandCard {
     public String toString(){
         String message = "{";
         for (Card d: handCards){
-            message += (" " + d.toString();
+            message += " " + d.getNumber();
         }
         return message;
     }
     // below will show functions from interface.
-
+    public boolean bust(){
+        return score>21;
+    }
+    public ArrayList<Integer> splitable(){
+        ArrayList<Integer> cardarray = new ArrayList<Integer>();
+        int[] allnum = new int[13];
+        for(int i = 0; i < handCards.size(); i++){
+            allnum[handCards.get(i).getNumber()]++;
+        }
+        for(int j = 0; j < 13; j ++){
+            if(allnum[j]>1){
+                cardarray.add(j);
+            }
+        }
+        return cardarray;
+    }
+    public Card getHandCard(Integer i){
+        return handCards.get(i);
+    }
+    public Integer getFirstIndex(Integer num){
+        for(int i = 0 ; i < handCards.size(); i ++){
+            if(handCards.get(i).getNumber()==num){
+                return i;
+            }
+        }
+    }
 }
