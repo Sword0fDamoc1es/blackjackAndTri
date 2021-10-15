@@ -10,6 +10,9 @@ public class Card {
         this.name = name;
     }
 
+    public Integer getNumber(){return number;}
+    public String getName(){return name;}
+
     // Card this a concrete obj in handCards.
     // it contains nunmber and name.
     // on the desk, at most 52 cards.

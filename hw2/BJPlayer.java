@@ -17,15 +17,19 @@ public class BJPlayer {
         isOut = 0;
     }
 
+    public Boolean isSplitable(Integer index){return true;}
     public String getName(){return name;}
     public Integer getMoney(){return money;}
     public Integer getIsOut(){return isOut;}
     public void receiveCard(Card card_, Integer handCards_index){
         handcard_list.get(handCards_index).addCard(card_);
     }
-    public void splitCard(Integer index){
-        HandCard handCard_out = handcard_list.get(index);
-        handcard_list.remove(index);
+    public void splitCard(Integer index, Integer number){
+        HandCard to_be_Split = handcard_list.get(index);
+        Integer first_index = to_be_Split.getfirstIndex(number);
+        HandCard new_handcard = new HandCard(to_be_Split.getCard(first_index));
+        to_be_Split.removeCard(first_index);
+
         // I/O 
         // show cards and index for two new handcard
         // iterate all cards to ask user to split cards into two handcards

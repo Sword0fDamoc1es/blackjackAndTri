@@ -97,8 +97,9 @@ public class HandCard {
     public String toString(){
         String message = "{";
         for (Card d: handCards){
-            message += (" " + d.toString();
+            message += (" " + d.toString());
         }
+        
         return message;
     }
     // below will show functions from interface.

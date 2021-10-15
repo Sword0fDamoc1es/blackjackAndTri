@@ -1,30 +1,28 @@
-import java.util.Random;
+import java.util.*;
 
 public class AllCard {
-    public int[] number = new int[13];
-    // name may not be used??
-    public String[][] name = new String[13][4];
+    public ArrayList<Card> cards = new ArrayList<Card>();
+    public Set<Integer> set;
 
     AllCard(){
-        for(int i = 0; i < number.length; i++){
-            number[i] = 4;
+        set = new HashSet<Integer>();
+        String[] flowers = {"Heart", "Spade", "Diamond", "Club"};
+        for(int i = 0; i < 4; i++){
+            String name = flowers[i];
+            for (int j = 1 ; j < 14; j ++){cards.add(new Card(j, name));}
         }
-        for (int j = 0 ; j < 13; j ++){
-            name[j][0] = "Heart";
-            name[j][1] = "Spade";
-            name[j][2] = "Diamond";
-            name[j][3] = "Club";
-        }
-
     }
 
     public Card cardGenerate(){
         Random rand = new Random();
 // **??** rewrite the following to be rebust.
-        int num = rand.nextInt(13);
-        int nindex = rand.nextInt(4);
-        String n = "to be annouced";
+        int num = rand.nextInt(53);
+        while (set.contains(num)){ num = rand.nextInt(52);}
+        set.add(num);
+        return cards.get(num);
+    }
 
-        return new Card(num,n);
+    public void reset(){
+        set = new HashSet<Integer>();
     }
 }
