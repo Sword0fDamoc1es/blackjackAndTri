@@ -15,8 +15,14 @@ public class BJPlayer {
         name = name_;
         money = money_;
         isOut = 0;
+        handcard_list.add(new HandCard());
     }
-
+    public ArrayList<HandCard> getHandCardList(){return handcard_list;}
+    public void clearState(){
+        clearIsOut();
+        handcard_list =  new ArrayList<HandCard>();
+        handcard_list.add(new HandCard());
+    }
     public Boolean isSplitable(Integer index){
         Integer bed_on = handcard_list.get(index).getBet();
         ArrayList<Integer> nums = handcard_list.get(index).splitable();

@@ -16,11 +16,12 @@ public class BJDealer {
         // codes need to be done.
         name = name_;
         money = money_;
+
     }
     
     public String getName(){return name;}
     public Integer getMoney(){return money;}
-    public void receiveCard(Card card_, Integer handCards_index){
+    public void receiveCard(Card card_){
         handcards.addCard(card_);
     }
     public void reward(Integer reward_){money += reward_;}
