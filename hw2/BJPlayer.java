@@ -17,7 +17,11 @@ public class BJPlayer {
         isOut = 0;
     }
 
-    public Boolean isSplitable(Integer index){return true;}
+    public Boolean isSplitable(Integer index){
+        Integer bed_on = handcard_list.get(index).getBet();
+        ArrayList<Integer> nums = handcard_list.get(index).splitable();
+        return (money>=bed_on)&&(nums.size()>=0);
+    }
     public String getName(){return name;}
     public Integer getMoney(){return money;}
     public Integer getIsOut(){return isOut;}
@@ -26,14 +30,10 @@ public class BJPlayer {
     }
     public void splitCard(Integer index, Integer number){
         HandCard to_be_Split = handcard_list.get(index);
-        Integer first_index = to_be_Split.getfirstIndex(number);
-        HandCard new_handcard = new HandCard(to_be_Split.getCard(first_index));
+        Integer first_index = to_be_Split.getFirstIndex(number);
+        HandCard new_handcard = new HandCard(to_be_Split.getHandCard(first_index));
         to_be_Split.removeCard(first_index);
-
-        // I/O 
-        // show cards and index for two new handcard
-        // iterate all cards to ask user to split cards into two handcards
-
+        handcard_list.add(new_handcard);
     }
     public void makeBet(Integer bet){money -= bet;}
     public void reward(Integer reward_){money += reward_;}
@@ -41,7 +41,12 @@ public class BJPlayer {
     public void out(){isOut = 1;}
     public String toString(){
         // return all handcards
-        return new String();
+        String message = name + ": ";
+        int count = 0;
+        for (HandCard handcard: handcard_list){
+            message += "\n"+"Handcards "+ count + ":" + handcard.toString(); 
+        }
+        return message;
     }
 
 }
