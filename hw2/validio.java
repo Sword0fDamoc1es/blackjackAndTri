@@ -28,6 +28,35 @@ public class validio {
 
         return b;
     }
+    public int validMoney(int m){
+        System.out.println("Please input money,");
+        System.out.println("banker needs at least : "+ 3*m+" money.");
+        
+        int b;
+        while(true){
+            Scanner scan = new Scanner(System.in);
+            try{
+                b = scan.nextInt();
+                if(b<=0||b>3*m){
+                    System.out.println("Please input bet larger than 0 and smaller than "+3*m);
+                    b = scan.nextInt();
+                    continue;
+                }
+                else{
+                    break;
+                }
+            }
+            catch(Exception e){
+                System.out.println("Please input valid bet. integer only.");
+                b = scan.nextInt();
+            }
+            
+            
+            
+        }
+
+        return b;
+    }
 
     public int validBet(Integer m){
         System.out.println("Please input bet");
