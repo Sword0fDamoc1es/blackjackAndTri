@@ -31,4 +31,7 @@ public class BJDealer {
         message += "\n"+"Handcards "+ count + ":" + handcards.toString(); 
         return message;
     }
+    public int getScore(){
+        return handcards.getScore();
+    }
 }

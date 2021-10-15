@@ -17,6 +17,9 @@ public class BJPlayer {
         isOut = 0;
     }
 
+    public ArrayList<HandCard> getHandCardList(){
+        return handcard_list;
+    }
     public Boolean isSplitable(Integer index){
         Integer bed_on = handcard_list.get(index).getBet();
         ArrayList<Integer> nums = handcard_list.get(index).splitable();
