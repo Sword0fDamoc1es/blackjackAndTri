@@ -204,13 +204,13 @@ public class validio {
         return a;
     }
     public String validyn(){
-        Scanner scan = new Scanner(System.in);
         System.out.println("please choose yes 'y'  or no  'n'. ");
         String a;
         while(true){
+            Scanner scan = new Scanner(System.in);
             try{
                 a = scan.nextLine();
-                if(a.equals("n") || a.equals("y")){
+                if(!a.equals("n") && !a.equals("y")){
                     System.out.println("invalid input!");
                 }else{
                     break;
@@ -219,14 +219,13 @@ public class validio {
                 System.out.println("please input valid number.");
             }
         }
-        scan.close();
         return a;
     }
 
     public static void main(String[] args) {
         validio io = new validio();
-        int num = io.validBet(6);
-        System.out.println(num);
+        String n = io.validyn();
+        System.out.println(n);
         // int num = io.playerNumber();
         // String name = io.playername();
         // System.out.println(name);

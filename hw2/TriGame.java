@@ -29,6 +29,7 @@ public class TriGame {
         player_list = new ArrayList<TriPlayer>();
         // I/O : how many players
         int num_of_players = io.playerNumber();
+        System.out.println("player will have the same amount of money;");
         int money = io.validMoney();
         for(int i=0 ; i < num_of_players; i++){
             // I/O : Name for player i
@@ -37,6 +38,7 @@ public class TriGame {
             player_list.add(new TriPlayer(name,money));
         }
         // I/O : Total Money for dealer
+        System.out.println("Here comes the info for dealer.");
         String name = io.playername();
         int dmoney = io.validMoney(money);
         dealer = new TriDealer(name,dmoney);
@@ -174,7 +176,7 @@ public class TriGame {
                             hc.addCard(c);
                             hc.refresh_score();
                             System.out.println(p.getName()+" reveive card "+c);
-                            if(hc.bust()){
+                            if(hc.checkBust(31)){
                                 stand = true;
                                 // I/O: this handcard is bust, you lost bet on this handcard
                                 continue;

@@ -77,7 +77,19 @@ public class HandCard {
         if (score>21){setBust();}
         return score;
     }
-
+    public int refresh_score(int n){
+        // System.out.println("Your current score is :");
+        // System.out.println(score);
+        // System.out.println("Recheck your score: ");
+        // **??** I/O is needed here!
+        score = 0;
+        for(Card c : handCards){
+            score += c.selectVal();
+        }
+        // System.out.println(score);
+        if (score>n){setBust();}
+        return score;
+    }
     // for the following function, pd means player or dealer, 0 is player, 1 is dealer.
     //                             state means what is the state of dealer.
     // for player, their cards always face up, until they stand or bust.
@@ -109,6 +121,10 @@ public class HandCard {
     public boolean checkBust(){
         if (getDefaultScore()>21){setBust();}
         return getDefaultScore()>21;
+    }
+    public boolean checkBust(int n){
+        if (getDefaultScore()>n){setBust();}
+        return getDefaultScore()>n; 
     }
 
     public Integer getDefaultScore(){
