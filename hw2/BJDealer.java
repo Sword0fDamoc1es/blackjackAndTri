@@ -6,7 +6,7 @@ public class BJDealer {
     private String name;
     private Integer money;
     private HandCard handcards =  new HandCard();
-    private Integer state;
+    private Integer state = 0;
     
 
 
@@ -31,5 +31,11 @@ public class BJDealer {
         int count = 0;
         message += "\n"+"Handcards "+ count + ":" + handcards.toString(); 
         return message;
+    }
+    public int getScore(){
+        return handcards.getScore();
+    }
+    public int getState(){
+        return state;
     }
 }
