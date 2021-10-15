@@ -9,7 +9,7 @@ public class BJDealer {
     private Integer bet;
     private Integer money;
     private Integer isOut;
-    private ArrayList<BJCard> handcards =  new ArrayList<BJCard>();
+    private ArrayList<HandCard> handcards =  new ArrayList<HandCard>();
     private Integer isSplit;
     
 
