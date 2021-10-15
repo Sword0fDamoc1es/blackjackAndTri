@@ -2,16 +2,22 @@ import java.util.*;
 public class Card {
     private Integer number;
     private String name;
+    private Integer flipped;
     // private Integer isFlipped = 0;
 
 
     Card(int number, String name){
         this.number = number;
         this.name = name;
+        flipped = 0;
     }
 
     public Integer getNumber(){return number;}
     public String getName(){return name;}
+    public void flipCard(){flipped = 1;}
+    public void openCard(){flipped = 0;}
+    public Integer isFlipped(){return flipped;}
+
 
     // Card this a concrete obj in handCards.
     // it contains nunmber and name.
@@ -50,6 +56,11 @@ public class Card {
 
         System.out.println();
         return value;
+    }
+
+    public String toString(){
+        if (flipped == 1){return "*";}
+        return number.toString();
     }
 
 }
