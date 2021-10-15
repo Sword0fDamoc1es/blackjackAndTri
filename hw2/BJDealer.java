@@ -6,7 +6,7 @@ public class BJDealer {
     private String name;
     private Integer money;
     private HandCard handcards =  new HandCard();
-    private Integer state;
+    private Integer state = 0;
     
 
 
@@ -20,7 +20,7 @@ public class BJDealer {
     
     public String getName(){return name;}
     public Integer getMoney(){return money;}
-    public void receiveCard(Card card_, Integer handCards_index){
+    public void receiveCard(Card card_){
         handcards.addCard(card_);
     }
     public void reward(Integer reward_){money += reward_;}
@@ -33,5 +33,8 @@ public class BJDealer {
     }
     public int getScore(){
         return handcards.getScore();
+    }
+    public int getState(){
+        return state;
     }
 }

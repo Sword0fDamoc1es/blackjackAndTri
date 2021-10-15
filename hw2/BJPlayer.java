@@ -15,6 +15,7 @@ public class BJPlayer {
         name = name_;
         money = money_;
         isOut = 0;
+        handcard_list.add(new HandCard());
     }
 
     public ArrayList<HandCard> getHandCardList(){
