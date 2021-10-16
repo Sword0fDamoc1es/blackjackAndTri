@@ -10,7 +10,7 @@ public class validio {
                 b = scan.nextInt();
                 if(b<=0){
                     System.out.println("Please input bet larger than 0.");
-                    b = scan.nextInt();
+                    // b = scan.nextInt();
                     continue;
                 }
                 else{
@@ -28,7 +28,7 @@ public class validio {
 
         return b;
     }
-    public int validMoney(int m){
+    public int validMoney(int m){// changed a  input bug.
         System.out.println("Please input money,");
         System.out.println("banker needs at least : "+ 3*m+" money.");
         
@@ -37,9 +37,9 @@ public class validio {
             Scanner scan = new Scanner(System.in);
             try{
                 b = scan.nextInt();
-                if(b<=0||b>3*m){
-                    System.out.println("Please input bet larger than 0 and smaller than "+3*m);
-                    b = scan.nextInt();
+                if(b<3*m){
+                    System.out.println("Please input bet at least "+3*m);
+                    // b = scan.nextInt();
                     continue;
                 }
                 else{
@@ -48,7 +48,7 @@ public class validio {
             }
             catch(Exception e){
                 System.out.println("Please input valid bet. integer only.");
-                b = scan.nextInt();
+                // b = scan.nextInt();
             }
             
             
@@ -68,7 +68,7 @@ public class validio {
                 b = scan.nextInt();
                 if(b<=0 || b>m){
                     System.out.println("Please input bet larger than 0 and less than "+m);
-                    b = scan.nextInt();
+                    // b = scan.nextInt();
                     continue;
                 }
                 else{
@@ -95,7 +95,7 @@ public class validio {
                 b = scan.nextInt();
                 if(b != 0 && b != 1){
                     System.out.println("Please input 0,1 to select game.");
-                    b = scan.nextInt();
+                    // b = scan.nextInt();
                     continue;
                 }
                 else{
@@ -104,7 +104,7 @@ public class validio {
             }
             catch(Exception e){
                 System.out.println("Please input integer only.");
-                b = scan.nextInt();
+                // b = scan.nextInt();
             }
             
             
@@ -122,7 +122,7 @@ public class validio {
                 b = scan.nextInt();
                 if(b <= 1){
                     System.out.println("Please input number > 0.");
-                    b = scan.nextInt();
+                    // b = scan.nextInt();
                     continue;
                 }
                 else{
@@ -164,7 +164,7 @@ public class validio {
                 b = scan.nextInt();
                 if(b<1 || b >4 ){
                     System.out.println("please input valid operation type.");
-                    b = scan.nextInt();
+                    // b = scan.nextInt();
                     continue;
                 }
                 else{
@@ -193,7 +193,7 @@ public class validio {
                     break;
                 }else{
                     System.out.println("invalid input!");
-                    a = scan.nextInt();
+                    // a = scan.nextInt();
                 }
             }catch(Exception e){
                 System.out.println("please input valid number.");
@@ -224,7 +224,7 @@ public class validio {
 
     public static void main(String[] args) {
         validio io = new validio();
-        String n = io.validyn();
+        int n = io.validBet(15);
         System.out.println(n);
         // int num = io.playerNumber();
         // String name = io.playername();

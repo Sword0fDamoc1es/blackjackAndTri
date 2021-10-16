@@ -124,6 +124,10 @@ public class TriGame {
 
 
     }
+// in this part :
+// all display is fine EXCEPT:
+// 1. missing dealer's part after play's operations are done.
+// 2. missing final display of the board.
 
     public void new_round(){
         cards.reset();
@@ -227,6 +231,7 @@ public class TriGame {
     }
     public void round_cal(Integer game_state){
         if (game_state == 0){
+            System.out.println("Dealer win!");
             // dealer win
             for (TriPlayer p: player_list){ 
                 if(p.getIsOut()==0){
@@ -236,6 +241,7 @@ public class TriGame {
                 }
             }
         }else if(game_state == 1){ // dealer bust
+            System.out.println("final check!");
             int score = 0;
             TriPlayer pp = new TriPlayer("",-1);
             for (TriPlayer p: player_list){ 
