@@ -44,6 +44,7 @@ public class BJPlayer {
     public void reward(Integer reward_){money += reward_;}
     public void clearIsOut(){isOut = 0;}
     public void out(){isOut = 1;}
+    public String printInfo(){return "Player " + name +" with total money " + money+".";}
     public String toString(){
         // return all handcards
         String message = "Player "+ name + " [Money left: " + money + "] has the following cards: ";

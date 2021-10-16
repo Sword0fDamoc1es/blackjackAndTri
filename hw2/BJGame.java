@@ -56,8 +56,13 @@ public class BJGame {
     }
 
     public void new_round(){
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("Now we start a new round.");
         cards.reset();
-
+        System.out.println("Now welcom players who still stays!!!");
+        for (BJPlayer p : player_list){
+            p.printInfo();
+        }
         // make bet for all not out
         for(BJPlayer p: player_list){
             if(p.getIsOut()==0){
@@ -165,6 +170,7 @@ public class BJGame {
         }
         // update user_state -> all user withou money left is out
         out_players();
+        System.out.println("Now this round is end.");
     }
 
     public void out_players(){
