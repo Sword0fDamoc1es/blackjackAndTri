@@ -122,7 +122,7 @@ public class TriGame {
         }
 
 
-
+/// newly added.
     }
     public void handcardReset(){
         for(TriPlayer p : player_list){
