@@ -15,18 +15,18 @@ public class BJGame {
     public void set_players(){
         player_list = new ArrayList<BJPlayer>();
         // I/O : how many players
-
-        int num_of_players = 10;
+        int num_of_players = io.playerNumber();
         for(int i=0 ; i < num_of_players; i++){
             // I/O : Name for player i
             // I/O : Total Money for player i
-            String name = "";
-            int money = 0;
+            String name = io.playername();
+            int money = io.validMoney();
             player_list.add(new BJPlayer(name,money));
         }
         // I/O : Total Money for dealer
-        int money = 0;
-        dealer = new BJDealer("Dealer",money);
+        String name = io.playername();
+        int money = io.validMoney();
+        dealer = new BJDealer(name,money);
     }
     public void run(){
         while(checkGameWin()){
@@ -38,18 +38,21 @@ public class BJGame {
     public Boolean checkGameWin(){
         int count = player_list.size();
         for (BJPlayer p: player_list){
-            if (p.getIsOut()==0){count-=1;}
+            if (p.getIsOut()!=0){count-=1;}
         }
         return count != 0;
         
     }
     public void displaydesk(){
+        System.out.println("------------------------------------------------");
+        System.out.println(dealer);
         for (BJPlayer p : player_list){
+            // System.out.println(p.getName()+" ,now it your card.");
             if(p.getIsOut()==0){
                 System.out.println(p);
             }
         }
-        System.out.println(dealer);
+        System.out.println("------------------------------------------------");
     }
 
     public void new_round(){
@@ -59,7 +62,7 @@ public class BJGame {
         for(BJPlayer p: player_list){
             if(p.getIsOut()==0){
                 // I/O : get new bet on this round for player name
-                int mon = scan.nextInt();
+                int mon = io.validBet(p.getMoney());
                 p.makeBet(mon);
                 p.getHandCardList().get(0).makeBet(mon);
             }
@@ -69,14 +72,18 @@ public class BJGame {
         for(BJPlayer p : player_list){
             Card c = cards.cardGenerate();
             p.receiveCard(c,0);
+            System.out.println(p.getName()+" reveive card "+c);
             c = cards.cardGenerate();
             p.receiveCard(c,0);
+            System.out.println(p.getName()+" reveive card "+c);
         }
         Card c = cards.cardGenerate();
         c.flipCard();
         dealer.receiveCard(c);
+        System.out.println("dealer reveive card "+c);
         c = cards.cardGenerate();
         dealer.receiveCard(c); 
+        System.out.println("dealer reveive card "+c);
         // display all.
         displaydesk();
 
@@ -91,12 +98,13 @@ public class BJGame {
                     boolean stand = false;
                     while(!stand){
                         // I/O -> what option you need to do for this handset
-                        int op = scan.nextInt();
+                        int op = io.operationType();
                         if(op == 1){
                             // hit
                             c = cards.cardGenerate();
                             hc.addCard(c);
                             hc.refresh_score();
+                            System.out.println(p.getName()+" reveive card "+c);
                             if(hc.bust()){
                                 stand = true;
                                 // I/O: this handcard is bust, you lost bet on this handcard
@@ -117,6 +125,7 @@ public class BJGame {
                             hc.makeBet(2*bet);
                             c = cards.cardGenerate();
                             hc.addCard(c);
+                            System.out.println(p.getName()+" reveive card "+c);
                             int s = hc.refresh_score();
                             if (!hc.bust()){num_not_bust+=1;}
                             stand = true;
@@ -124,10 +133,11 @@ public class BJGame {
                         if(op == 4){
                             // split
                             // I/O : which number do you split
-                            int num = scan.nextInt();
+                            int num = io.validSplit(hc.splitable());
                             Integer index = p.getHandCardList().indexOf(hc);
                             p.splitCard(index, num);
                         }
+                        displaydesk();
                     }
                 }
                 if (num_not_bust!=0){numberOfLeft+=1;}
@@ -138,11 +148,13 @@ public class BJGame {
             round_cal(0); // dealer win
         }else{
             // show dealer card
-            dealer.getHandCard().getHandCard(0).openCard();
+            dealer.getHandCards().getHandCard(0).openCard();
             Integer dealer_score = dealer.getScore();
+            
             while (dealer_score<=16){
                 c = cards.cardGenerate();
                 dealer.receiveCard(c);
+                dealer_score = dealer.getScore();
             }
             if (dealer_score>21){round_cal(1);} // dealer bust
             else{round_cal(2);}
@@ -191,6 +203,11 @@ public class BJGame {
 
     public void ending(){
         System.out.println("game_over");
+    }
+
+    public static void main(String[] args) {
+        BJGame new_game = new BJGame();
+        new_game.run();
     }
 
 }
