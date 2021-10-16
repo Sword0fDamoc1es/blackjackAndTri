@@ -8,7 +8,6 @@ public class BJPlayer {
     private Integer isOut;
     private ArrayList<HandCard> handcard_list =  new ArrayList<HandCard>();
 
-
     // constructor with parameters.
     BJPlayer(String name_, Integer money_){
         // codes need to be done.
@@ -37,6 +36,8 @@ public class BJPlayer {
         HandCard to_be_Split = handcard_list.get(index);
         Integer first_index = to_be_Split.getFirstIndex(number);
         HandCard new_handcard = new HandCard(to_be_Split.getHandCard(first_index));
+        new_handcard.makeBet(to_be_Split.getBet());
+        money-=to_be_Split.getBet();
         to_be_Split.removeCard(first_index);
         handcard_list.add(new_handcard);
     }
@@ -51,6 +52,7 @@ public class BJPlayer {
         int count = 0;
         for (HandCard handcard: handcard_list){
             message += "\n"+"Handcards "+ count + ":" + handcard.toString();
+            count ++;
         }
         return message;
     }

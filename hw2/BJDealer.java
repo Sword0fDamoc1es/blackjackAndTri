@@ -23,6 +23,7 @@ public class BJDealer {
     public void receiveCard(Card card_){
         handcards.addCard(card_);
     }
+    public void clearState(){handcards =  new HandCard();}
     public void reward(Integer reward_){money += reward_;}
     public String toString(){
         // return all handcards
@@ -32,7 +33,10 @@ public class BJDealer {
         return message;
     }
     public int getScore(){ 
-        return handcards.getDefaultScore();
+        return handcards.refresh_score();
+    }
+    public int calScore(){
+        return handcards.getScore();
     }
     public int getState(){
         return state;

@@ -138,9 +138,6 @@ public class TriGame {
     public void new_round(){
         cards.reset();
         // !!!! we need to reset players' handcard!
-
-
-
         // // make bet for all not out
         // for(TriPlayer p: player_list){
         //     if(p.getIsOut()==0){
@@ -150,23 +147,6 @@ public class TriGame {
         //         p.getHandCardList().get(0).makeBet(mon);
         //     }
         // }
-
-        // // first hit.
-        // for(TriPlayer p : player_list){
-        //     Card c = cards.cardGenerate();
-        //     p.receiveCard(c,0);
-        //     System.out.println(p.getName()+" reveive card "+c);
-        //     c = cards.cardGenerate();
-        //     p.receiveCard(c,0);
-        //     System.out.println(p.getName()+" reveive card "+c);
-        // }
-        // Card c = cards.cardGenerate();
-        // c.flipCard();
-        // dealer.receiveCard(c);
-        // System.out.println("dealer reveive card "+c);
-        // c = cards.cardGenerate();
-        // dealer.receiveCard(c); 
-        // System.out.println("dealer reveive card "+c);
 
         prepare();
 

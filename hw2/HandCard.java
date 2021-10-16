@@ -60,7 +60,7 @@ public class HandCard {
     // For this method, it get a index after comparison. index is the input.
     public void removeCard(int index){
         handCards.remove(index);
-        score = refresh_score();
+        // score = refresh_score();
     }
     
     // this is used to return the score to the judge.
@@ -72,7 +72,8 @@ public class HandCard {
     // almost forget, for every player, once stand, he has already fix his score.
     // no further change of score until next turn.
     // thus we need a refresh score to ask for refresh.
-    public int refresh_score(){
+    public int 
+    refresh_score(){
         // System.out.println("Your current score is :");
         // System.out.println(score);
         // System.out.println("Recheck your score: ");
@@ -145,15 +146,16 @@ public class HandCard {
     }
     public ArrayList<Integer> splitable(){
         ArrayList<Integer> cardarray = new ArrayList<Integer>();
-        int[] allnum = new int[13];
+        int[] allnum = new int[14];
         for(int i = 0; i < handCards.size(); i++){
             allnum[handCards.get(i).getNumber()]++;
         }
-        for(int j = 0; j < 13; j ++){
+        for(int j = 1; j < 14; j ++){
             if(allnum[j]>1){
                 cardarray.add(j);
             }
         }
+        // System.out.println("Calling Function Splitable: "+allnum+cardarray);
         return cardarray;
     }
     public Card getHandCard(Integer i){
@@ -178,7 +180,7 @@ public class HandCard {
         }
         message += " }"; 
         message += " [Bet: "+bet+"]";
-        if (isBust==1){message+="**Bust**";}
+        if (isBust==1){message+=" **Bust**";}
         return message;
     }
 }
