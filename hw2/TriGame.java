@@ -124,6 +124,12 @@ public class TriGame {
 
 
     }
+    public void handcardReset(){
+        for(TriPlayer p : player_list){
+            p.getHandCardList().set(0, new HandCard());
+        }
+        dealer.getHandCards().HandCardReset();;
+    }
 // in this part :
 // all display is fine EXCEPT:
 // 1. missing dealer's part after play's operations are done.
@@ -131,6 +137,9 @@ public class TriGame {
 
     public void new_round(){
         cards.reset();
+        // !!!! we need to reset players' handcard!
+
+
 
         // // make bet for all not out
         // for(TriPlayer p: player_list){
