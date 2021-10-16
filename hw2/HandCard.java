@@ -30,6 +30,14 @@ public class HandCard {
         addCard(c);
         score = c.selectVal();
     }
+    // adding handcard reset()
+    public void HandCardReset(){
+        handCards = new ArrayList<Card>();
+        score = 0;
+        isBJ = 0;
+        bet = 0;
+        isBust = 0;
+    }
     public Integer getBet(){return bet;}
     public void makeBet(Integer bet_){bet = bet_;}
     public void addBet(Integer num){ bet += num;}

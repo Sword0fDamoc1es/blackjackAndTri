@@ -46,6 +46,7 @@ public class TriGame {
 
     public void run(){
         while(checkGameWin()){
+            System.out.println("new round!");
             new_round();
         }
         ending();
@@ -76,9 +77,9 @@ public class TriGame {
         System.out.println("Each Player get a card!");
         for(TriPlayer p : player_list){
             Card c = cards.cardGenerate();
+            System.out.println(p.getName()+" reveive card "+c);
             c.flipCard();
             p.receiveCard(c, 0);
-            System.out.println(p.getName()+" reveive card "+c);
         }
         //players need to know the value 
         // !!!!!!!!!! Code needed here for output player first handcard with face down.
@@ -93,6 +94,7 @@ public class TriGame {
         // after they know their own card, choose bet or fold. using validyn
         validio io = new validio();
         for(TriPlayer p : player_list){
+            System.out.println(p.getName() + " choose bet or fold.");
             String choice = io.validyn();
             if(choice.equals("n")){
                 System.out.println(p.getName() + " chooses fold! out!");
@@ -106,6 +108,7 @@ public class TriGame {
         }
 
         // finish betting. now each play receive two more cards. with face up.
+        System.out.println("now player get two face-up cards.");
         for(TriPlayer p : player_list){
             if(p.getIsOut()==0){
                 Card cc = cards.cardGenerate();
@@ -119,11 +122,24 @@ public class TriGame {
         }
 
 
-
+/// newly added.
     }
+    public void handcardReset(){
+        for(TriPlayer p : player_list){
+            p.getHandCardList().set(0, new HandCard());
+        }
+        dealer.getHandCards().HandCardReset();;
+    }
+// in this part :
+// all display is fine EXCEPT:
+// 1. missing dealer's part after play's operations are done.
+// 2. missing final display of the board.
 
     public void new_round(){
         cards.reset();
+        // !!!! we need to reset players' handcard!
+
+
 
         // // make bet for all not out
         // for(TriPlayer p: player_list){
@@ -163,23 +179,24 @@ public class TriGame {
         Integer numberOfLeft = 0; // check if still any player on desk
         for (TriPlayer p: player_list){ 
             if(p.getIsOut()==0){
+                System.out.println(p.getName() + " take turns.");
                 Integer num_not_bust = 0; // check if player has un_bust handcard
                 for(HandCard hc: p.getHandCardList()){
                     //select operation for card set hc
                     boolean stand = false;
                     while(!stand){
                         // I/O -> what option you need to do for this handset
+                        System.out.println("hit: 1 ; stand : 2 ");
                         int op = io.operationType();
                         if(op == 1){
                             // hit
                             c = cards.cardGenerate();
                             hc.addCard(c);
-                            hc.refresh_score();
                             System.out.println(p.getName()+" reveive card "+c);
                             if(hc.checkBust(31)){
                                 stand = true;
+                                System.out.println("Oops! Bust!");
                                 // I/O: this handcard is bust, you lost bet on this handcard
-                                continue;
                             }
                         }
                         if(op == 2){
@@ -223,6 +240,7 @@ public class TriGame {
     }
     public void round_cal(Integer game_state){
         if (game_state == 0){
+            System.out.println("Dealer win!");
             // dealer win
             for (TriPlayer p: player_list){ 
                 if(p.getIsOut()==0){
@@ -232,6 +250,7 @@ public class TriGame {
                 }
             }
         }else if(game_state == 1){ // dealer bust
+            System.out.println("final check!");
             int score = 0;
             TriPlayer pp = new TriPlayer("",-1);
             for (TriPlayer p: player_list){ 
