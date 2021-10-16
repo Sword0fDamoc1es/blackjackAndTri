@@ -41,7 +41,7 @@ public class HandCard {
     public ArrayList<Card> getAllCards(){return handCards;}
     public void addCard(Card c){
         handCards.add(c);
-        score += c.selectVal();
+        // score += c.selectVal();
     }
     // remove method is used in split method.
     // before using remove, there is a comparison in split,
@@ -74,6 +74,7 @@ public class HandCard {
             score += c.selectVal();
         }
         // System.out.println(score);
+        if (score>21){setBust();}
         return score;
     }
 
@@ -100,10 +101,23 @@ public class HandCard {
         }
     }
 
+    public void setBust(){
+        isBust = 1;
+    }
 
     // below will show functions from interface.
-    public boolean bust(){
-        return score>21;
+    public boolean checkBust(){
+        if (getDefaultScore()>21){setBust();}
+        return getDefaultScore()>21;
+    }
+
+    public Integer getDefaultScore(){
+        Integer score_ = 0;
+        for(Card c : handCards){
+            if (c.getNumber()>10){score_ += 10;}
+            else{score_ += c.getNumber();}
+        }
+        return score_;
     }
     public ArrayList<Integer> splitable(){
         ArrayList<Integer> cardarray = new ArrayList<Integer>();
@@ -139,7 +153,8 @@ public class HandCard {
             message += " " + d;
         }
         message += " }"; 
-        message += "[Bet: "+bet+"]";
+        message += " [Bet: "+bet+"]";
+        if (isBust==1){message+="**Bust**";}
         return message;
     }
 }

@@ -46,10 +46,10 @@ public class BJPlayer {
     public void out(){isOut = 1;}
     public String toString(){
         // return all handcards
-        String message = "Player "+ name + " has the following cards: ";
+        String message = "Player "+ name + " [Money left: " + money + "] has the following cards: ";
         int count = 0;
         for (HandCard handcard: handcard_list){
-            if (!handcard.bust()){message += "\n"+"Handcards "+ count + ":" + handcard.toString();}
+            message += "\n"+"Handcards "+ count + ":" + handcard.toString();
         }
         return message;
     }

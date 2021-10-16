@@ -19,7 +19,7 @@ public class validio {
             }
             catch(Exception e){
                 System.out.println("Please input valid bet. integer only.");
-                b = scan.nextInt();
+                // b = scan.nextInt();
             }
             
             
