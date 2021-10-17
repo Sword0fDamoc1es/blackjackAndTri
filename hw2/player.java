@@ -1,3 +1,4 @@
+import java.util.*;
 public abstract class player{
     public abstract void out();
     public abstract String toString();
@@ -7,4 +8,5 @@ public abstract class player{
     public abstract void clearState();
     public abstract void makeBet(Integer b);
     public abstract void reward(Integer n);
+    public abstract ArrayList<HandCard> getHandCardList();
 }

@@ -1,7 +1,7 @@
 // new created BJPlayer.
 import java.util.*;
 
-public class TriPlayer extends player{
+public class TriPlayer extends player implements triplayeroper{
     // attributes
     private String name;
     private Integer money;
