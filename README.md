@@ -1,5 +1,5 @@
 Black Jack.
-Group Work: Mao Mao, Yizheng Xie.
+Group Work: Mao Mao (U53356422) & Yizheng Xie (U49925993)
 
 In this program, we set up Black Jack game.
 Using the parts of that game, we also established TriantaEna.
