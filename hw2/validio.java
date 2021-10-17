@@ -137,15 +137,15 @@ public class validio {
     }
 
 
-    public int selectGame(){
-
+    public int selectGame(String prompt){
+        System.out.println(prompt);
         int b;
         while(true){
             Scanner scan = new Scanner(System.in);
             try{
                 b = scan.nextInt();
-                if(b != 0 && b != 1){
-                    System.out.println("Please input 0,1 to select game.");
+                if(b != 1 && b != 2 && b!=3){
+                    System.out.println("Please input 1,2,3 to select game or quit.");
                     // b = scan.nextInt();
                     continue;
                 }
