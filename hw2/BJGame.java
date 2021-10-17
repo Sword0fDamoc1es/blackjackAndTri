@@ -61,6 +61,7 @@ public class BJGame {
         System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++");
         System.out.println("Now we start a new round.");
         cards.reset();
+        System.out.println(dealer.printInfo());
         System.out.println("Now welcom players who still stays!!!");
         for (BJPlayer p : player_list){
             if (p.getIsOut()==0){System.out.println(p.printInfo());}
@@ -173,6 +174,7 @@ public class BJGame {
                 dealer.receiveCard(c);
                 System.out.println("Dealer"+" reveive card "+c);
                 dealer_score = dealer.calScore();
+                System.out.println("Dealer"+" now total score is "+dealer_score);
                 displaydesk();
             }
             if (dealer_score>21){round_cal(1);} // dealer bust
@@ -193,9 +195,15 @@ public class BJGame {
     public void round_cal(Integer game_state){
         System.out.println("Now this round ended, starts scores calculation.");
         System.out.println("1. First we calculate sum of all handcards for each player and dealer.");
-        System.out.println("For dealer: ");
-        int score_ = dealer.calScore();
-        System.out.println("-> The score is " + score_ + ".");
+        if (dealer.getHandCards().getScore()>21){
+            System.out.println("dealer bust.");
+        }else{
+            System.out.println("For dealer: ");
+            int score_ = dealer.getScore();
+            if (score_==0){dealer.calScore();}
+            System.out.println("-> The score is " + score_ + ".");
+        }
+        int score_;
         for (BJPlayer p: player_list){ 
             if(p.getIsOut()==0){
                 for(HandCard hc: p.getHandCardList()){
@@ -242,7 +250,6 @@ public class BJGame {
                             System.out.println("Player "+p.getName()+" bust and lose all bet on handcard "+ hc);//
                             dealer.reward(hc.getBet());
                             System.out.println("-> Dealer receive "+hc.getBet()+ " money.");
-
                         }
                         else if (hc.getScore()<dealer.getScore()){
                             System.out.println("Player "+p.getName()+" is smaller and lose all bet on handcard "+ hc);//

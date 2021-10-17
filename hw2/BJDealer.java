@@ -32,6 +32,7 @@ public class BJDealer {
         message += "\n"+"Handcards "+ count + ":" + handcards.toString(); 
         return message;
     }
+    public String printInfo(){return "Dealer " + name +" with total money " + money+".";}
     public int getScore(){ 
         return handcards.getScore();
     }

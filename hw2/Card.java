@@ -53,7 +53,7 @@ public class Card {
             String request = scan.nextLine();
             // the above needs rewrite.
             value = (request.equals("11"))?11:1;
-
+            return value;
         }
         if(number>=10){
             value = 10;

@@ -3,7 +3,6 @@ import java.util.*;
 public class Game {
     
     public void run() {
-        System.out.println();
         String prompt = "Please select your choice:\n1. BlackJack;\n2. TriantaEna;\n3. Quit.";
         validio io = new validio();
         int op = io.selectGame(prompt);

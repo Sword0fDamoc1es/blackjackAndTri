@@ -72,8 +72,7 @@ public class HandCard {
     // almost forget, for every player, once stand, he has already fix his score.
     // no further change of score until next turn.
     // thus we need a refresh score to ask for refresh.
-    public int 
-    refresh_score(){
+    public int refresh_score(){
         // System.out.println("Your current score is :");
         // System.out.println(score);
         // System.out.println("Recheck your score: ");
