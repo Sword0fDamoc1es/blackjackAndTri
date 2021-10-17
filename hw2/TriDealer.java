@@ -1,7 +1,7 @@
 // new created 
 import java.util.*;
 
-public class TriDealer {
+public class TriDealer extends dealer{
     // attributes
     private String name;
     private Integer money;

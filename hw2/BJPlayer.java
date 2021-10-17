@@ -1,7 +1,7 @@
 // new created BJPlayer.
 import java.util.*;
 
-public class BJPlayer {
+public class BJPlayer extends player implements bjplayeroper {
     // attributes
     private String name;
     private Integer money;
