@@ -30,7 +30,7 @@ public class Game {
     public void intro() {
         System.out.println("Welcom to Games designed by Mao & Yizheng!!!");
         System.out.println("Now we provide two beg games: BlackJack Game and TriantaEna Game");
-        System.out.println("In thest two games, you will make bet and try your best to earn money!!!");
+        System.out.println("In these two games, you will make bet and try your best to earn money!!!");
         System.out.println("Enjoy your games!");
     }
     public static void main(String[] args){
