@@ -32,7 +32,7 @@ public class TriDealer {
         return message;
     }
     public int getScore(){ 
-        return handcards.refresh_score();
+        return handcards.refresh_score(31);
     }
     public int getState(){
         return state;

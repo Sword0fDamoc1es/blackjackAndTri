@@ -24,5 +24,8 @@ public class AllCard {
 
     public void reset(){
         set = new HashSet<Integer>();
+        for(Card c : cards){
+            c.openCard();
+        }
     }
 }

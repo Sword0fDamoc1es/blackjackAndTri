@@ -13,13 +13,18 @@ public class TriGame {
         set_players();
     }
     public void switchDealer(TriPlayer p, TriDealer d){
+        validio io = new validio();
+        String choice = io.validyn();
+        if(choice.equals("n")){
+            return;
+        }
         String pname = p.getName();
         int pmoney = p.getMoney();
         String dname = d.getName();
         int dmoney = d.getMoney();
         TriPlayer tempTriPlayer = new TriPlayer(dname,dmoney);
         TriDealer tempTriDealer = new TriDealer(pname,pmoney);
-        player_list.remove(p);
+        player_list.remove(player_list.indexOf(p));
         player_list.add(tempTriPlayer);
         dealer = tempTriDealer;   
     }
@@ -204,8 +209,11 @@ public class TriGame {
             while (dealer_score<=26){
                 c = cards.cardGenerate();
                 dealer.receiveCard(c);
+                System.out.println("Dealer"+" reveive card "+c);
                 dealer_score = dealer.getScore();
+                displaydesk();
             }
+            System.out.println("Let's check all the points!");
             if (dealer_score>31){round_cal(1);} // dealer bust
             else{round_cal(2);}
         }
@@ -220,6 +228,7 @@ public class TriGame {
         }
     }
     public void round_cal(Integer game_state){
+        System.out.println("---------------------");
         if (game_state == 0){
             System.out.println("Dealer win!");
             // dealer win
@@ -230,47 +239,69 @@ public class TriGame {
                     }
                 }
             }
+            System.out.println("---------------------");
         }else if(game_state == 1){ // dealer bust
-            System.out.println("final check!");
+            System.out.println("game state 1.!");
             int score = 0;
             TriPlayer pp = new TriPlayer("",-1);
+            System.out.println("start checking player!");
+
             for (TriPlayer p: player_list){ 
                 if(p.getIsOut()==0){
                     for(HandCard hc: p.getHandCardList()){
+                        int ssss = hc.refresh_score();
                         if (hc.isBust==1){dealer.reward(hc.getBet());}
                         else{
+                            System.out.println("player "+p.getName()+" wins!"+ "score is "+ hc.getScore());
                             p.reward(hc.getBet()*2);
                             if(score<hc.getScore()){
                                 score = hc.getScore();
+                                System.out.println("player changed!!!!!!!");
                                 pp = p;
+                                System.out.println(pp.getName());
+                                System.out.println();
                             }
                         }
                     }
                 }
             }
+            System.out.println("end all player check!");
             if(pp.getMoney()!=-1){
+                System.out.println("---------------------");
+                System.out.println("start switch!");
                 switchDealer(pp, dealer);
+                System.out.println("---switch--done-----");
             }
         }else{
+            System.out.println("------------");
             int score = 0;
             TriPlayer pp = new TriPlayer("",-1);
+
             for (TriPlayer p: player_list){ 
                 if(p.getIsOut()==0){
                     for(HandCard hc: p.getHandCardList()){
+                        int ssss = hc.refresh_score(31);
                         if (hc.getScore()<dealer.getScore()){dealer.reward(hc.getBet());}
                         else if(hc.getScore()==dealer.getScore()){p.reward(hc.getBet());}
                         else{
+                            System.out.println("player" + p.getName() + " wins!");
                             p.reward(hc.getBet()*2);
                             if(score < hc.getScore()){
                                 score = hc.getScore();
+
                                 pp = p;
+
+
                             }
                         }
                     }
                 }
             }
             if(pp.getMoney()!=-1){
+                System.out.println("---------------------");
+                System.out.println("start switch");
                 switchDealer(pp, dealer);
+                System.out.println("-----switch--done-----");
             }
         }
     }
