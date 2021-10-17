@@ -159,19 +159,20 @@ public class BJGame {
         }
         // user all bust
         if (numberOfLeft==0){
+            dealer.getHandCards().getHandCard(0).openCard();
             round_cal(0); // dealer win
         }else{
             // show dealer card
             dealer.getHandCards().getHandCard(0).openCard();
             System.out.println("Now the dealer open the flipped card.");
             displaydesk();
-            Integer dealer_score = dealer.getScore();
+            Integer dealer_score = dealer.calScore();
             
             while (dealer_score<=16){
                 c = cards.cardGenerate();
                 dealer.receiveCard(c);
                 System.out.println("Dealer"+" reveive card "+c);
-                dealer_score = dealer.getScore();
+                dealer_score = dealer.calScore();
                 displaydesk();
             }
             if (dealer_score>21){round_cal(1);} // dealer bust
@@ -191,7 +192,7 @@ public class BJGame {
     }
     public void round_cal(Integer game_state){
         System.out.println("Now this round ended, starts scores calculation.");
-        System.out.println("First we calculate sum of all handcards for each player and dealer.");
+        System.out.println("1. First we calculate sum of all handcards for each player and dealer.");
         System.out.println("For dealer: ");
         int score_ = dealer.calScore();
         System.out.println("-> The score is " + score_ + ".");
@@ -206,6 +207,7 @@ public class BJGame {
                 }
             }
         } 
+        System.out.println("2. Then we check the results.");
         if (game_state == 0){ // dealer win
             int total_score = 0;
             for (BJPlayer p: player_list){ 

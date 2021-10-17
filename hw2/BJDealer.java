@@ -33,10 +33,10 @@ public class BJDealer {
         return message;
     }
     public int getScore(){ 
-        return handcards.refresh_score();
+        return handcards.getScore();
     }
     public int calScore(){
-        return handcards.getScore();
+        return handcards.refresh_score();
     }
     public int getState(){
         return state;
