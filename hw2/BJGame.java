@@ -194,28 +194,6 @@ public class BJGame {
     }
     public void round_cal(Integer game_state){
         System.out.println("Now this round ended, starts scores calculation.");
-        System.out.println("1. First we calculate sum of all handcards for each player and dealer.");
-        if (dealer.getHandCards().getScore()>21){
-            System.out.println("dealer bust.");
-        }else{
-            System.out.println("For dealer: ");
-            int score_ = dealer.getScore();
-            if (score_==0){dealer.calScore();}
-            System.out.println("-> The score is " + score_ + ".");
-        }
-        int score_;
-        for (BJPlayer p: player_list){ 
-            if(p.getIsOut()==0){
-                for(HandCard hc: p.getHandCardList()){
-                    System.out.println("For Player "+p.getName()+" on handcard set "+hc+":");
-                    if (!hc.checkBust()){
-                        score_ = hc.refresh_score();
-                        System.out.println("-> The score is " + score_ + ".");
-                    }
-                }
-            }
-        } 
-        System.out.println("2. Then we check the results.");
         if (game_state == 0){ // dealer win
             int total_score = 0;
             for (BJPlayer p: player_list){ 
@@ -243,6 +221,28 @@ public class BJGame {
                 }
             }
         }else{
+            System.out.println("1. First we calculate sum of all handcards for each player and dealer.");
+            if (dealer.getHandCards().getScore()>21){
+                System.out.println("dealer bust.");
+            }else{
+                System.out.println("For dealer: ");
+                int score_ = dealer.getScore();
+                if (score_==0){dealer.calScore();}
+                System.out.println("-> The score is " + score_ + ".");
+            }
+            int score_;
+            for (BJPlayer p: player_list){ 
+                if(p.getIsOut()==0){
+                    for(HandCard hc: p.getHandCardList()){
+                        System.out.println("For Player "+p.getName()+" on handcard set "+hc+":");
+                        if (!hc.checkBust()){
+                            score_ = hc.refresh_score();
+                            System.out.println("-> The score is " + score_ + ".");
+                        }
+                    }
+                }
+            } 
+            System.out.println("2. Then we check the results.");
             for (BJPlayer p: player_list){ 
                 if(p.getIsOut()==0){
                     for(HandCard hc: p.getHandCardList()){
